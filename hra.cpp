@@ -80,11 +80,13 @@ int main(){
     cin >> x;
     }while (x=="no");
 
+
+
     string place;
     int w, lasersword, lasergun, medpac, chargpac;
-
+cout << "You find yourself in a city. ";
     do {
-        cout << "You find yourself in a city, where would you like to go? (You can open the inventory by typing 'inv' at any time except in combat)\n\n";
+        cout << "Where would you like to go? (You can open the inventory by typing 'inv' at any time except in combat)\n\n";
         cout <<"- Shop\n- Engineer\n- Medic\n- Leave\n\n";
 
 
@@ -92,35 +94,48 @@ int main(){
         cin >> place;
 
         if (place == "Shop" ) {
-                cout<< "What would you like to buy?\n 1-Laser sword for 50 gold\n 2-Laser gun for 50 gold\n 3-Medpack for 25 gold\n 4-Charge pack for 25 gold\n 5-\n";
+                do {
+                cout<< "What would you like to buy?\n 1-Laser sword for 50 gold\n 2-Laser gun for 50 gold\n 3-Medpack for 25 gold\n 4-Charge pack for 25 gold\n 5-Leave the shop\n";
                 cin >> w;
-
-
                 switch (w){
-
             case 1:
                 gold=gold-50;
                 lasersword++;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 2:
                 gold=gold-50;
                 lasergun++;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 3:
                 gold=gold-25;
                 medpac++;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 4:
                 gold=gold-25;
                 chargpac++;
-                x=="no";
-
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
+            case 5:
+                cout << "Are you sure you want to leave?\n";
+                cin >> x;
+                break;
             default:
                     x="no";}
+                }while(x=="no");
                     x="no";
 
 
 
 
-
             }else if (place == "Engineer" ) {
+                do{
                 cout << "What stat do you want to upgrade?\n 1- Health for 50 gold (by 25)\n 2- Energy for 50 gold (by 25)\n 3- Ranged damage for 100 gold \n 4- Melee damage for 100 gold \n";
                 cin >> w;
 
@@ -129,22 +144,42 @@ int main(){
             case 1:
                 gold=gold-50;
                 maxhp+=25;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 2:
                 gold=gold-50;
                 maxenergy+=25;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 3:
                 gold=gold-25;
                 rangedmult+=0.5;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 4:
                 gold=gold-25;
                 meleemult+=0.5;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
+            case 5:
+                cout << "Are you sure you want to leave?\n";
+                cin >> x;
+                break;
             default:
-                    x="no";}
-                    x="no";
+                x="no";}
+                }while(x=="no");
+                x="no";
+
+
 
 
             }else if (place == "Medic" ) {
-                cout << "Do you want to heal or charge up?\n 1- Heal up\n 2- Charge up\n 3- Leave\n";
+                do{
+                cout << "Do you want to heal or charge up?\n 1- Heal up\n 2- Charge up\n 3- Both\n 4- Leave\n";
                 cin >> w;
 
                 switch (w){
@@ -152,14 +187,32 @@ int main(){
             case 1:
                 gold=gold-50;
                 hp=maxhp;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 2:
                 gold=gold-50;
                 energy=maxenergy;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
             case 3:
-
+                gold=gold-100;
+                energy=maxenergy;
+                hp=maxhp;
+                cout << "\nRemaining gold - " << gold << endl;
+                x="no";
+                break;
+            case 4:
+                cout << "Are you sure you want to leave?\n";
+                cin >> x;
+                break;
             default:
                     x="no";}
-                    x="no";
+            }while (x=="no");
+            x="no";
+
+
 
             }else if (place == "Leave" ) {
                 cout << "Do you really want to leave?\n";
@@ -171,12 +224,5 @@ int main(){
                 x="no";
 
             }
-
-
-
-
-
-
-
     }while (x=="no");
 }
