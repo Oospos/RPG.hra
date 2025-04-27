@@ -6,8 +6,8 @@ using namespace std;
 
 int main(){
 
-    string name, cls, x;
-    int maxhp, maxenergy, hp, energy, gold, level=1, y, meleemult, rangedmult;
+    string name, cls, x, move1, move2, move3, move4;
+    int maxhp, maxenergy, hp, energy, gold, level=1, y, meleemult, rangedmult, mov [6];
 
     do{
          cout << "What's your name?\n";
@@ -30,6 +30,20 @@ int main(){
                 y=0;
                 meleemult=1;
                 rangedmult=1;
+
+                move1="Slam";
+                move2="Parry";
+                move3="Ricoshot";
+
+                mov [0]=15;
+                mov [1]=10;
+
+                mov [2]=20;
+                mov [3]=15;
+
+                mov [4]=5;
+                mov [5]=1;
+
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
                         "\nGold - " << gold;
@@ -43,6 +57,20 @@ int main(){
                 y=0;
                 meleemult=1,5;
                 rangedmult=0,5;
+
+                move1="Punch";
+                move2="Power blast";
+                move3="Ricoshot";
+
+                mov [0]=10;
+                mov [1]=10;
+
+                mov [2]=15;
+                mov [3]=15;
+
+                mov [4]=5;
+                mov [5]=5;
+
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
                         "\nGold - " << gold;
@@ -56,6 +84,19 @@ int main(){
                 y=0;
                 meleemult=0,5;
                 rangedmult=1.5;
+
+                move2="Kick";
+                move3="Throw rock";
+
+                mov [0]=20;
+                mov [1]=15;
+
+                mov [2]=25;
+                mov [3]=20;
+
+                mov [4]=10;
+                mov [5]=5;
+
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
                         "\nGold - " << gold;
@@ -67,8 +108,22 @@ int main(){
                 energy=maxenergy;
                 gold=10000;
                 y=0;
-                meleemult=2;
-                rangedmult=2;
+                meleemult=3;
+                rangedmult=3;
+
+                move1="Touch of death";
+                move2="Laser";
+                move3="Speed of light rock throw";
+
+                mov [0]=10000;
+                mov [1]=10;
+
+                mov [2]=15000;
+                mov [3]=15;
+
+                mov [4]=5000;
+                mov [5]=5;
+
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
                         "\nGold - " << gold;
