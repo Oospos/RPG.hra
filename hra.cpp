@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-void enemyattack (int maxhp, int maxenergy, int hp, int energy, int enmaxhp, int enhp, int t, int mov [6], int def, int endef, int endmg1, int endmg2, int endmg3, int win, string move1, string move2, string move3) {
+void enemyattack (int maxhp, int maxenergy, int hp, int energy, int enmaxhp, int enhp, int t, int mov [6], int def, int endef, int endmg1, int endmg2, int endmg3, int win, float dmgmult, string move1, string move2, string move3) {
     int x, y;
     cout << "You encountered an enemy!\n\n";
     do {
@@ -17,28 +17,28 @@ void enemyattack (int maxhp, int maxenergy, int hp, int energy, int enmaxhp, int
         cout << "HP: " << hp << "/" << maxhp << endl;
         cout << "Energy: " << energy << "/" << maxenergy << endl << endl;
         cout << "Choose your attack: ";
-        cout << "\n1: " << move1 << "\tdamage - " << mov [0] << "\tenergy use - " << mov [1];
-        cout << "\n2: " << move2 << "\tdamage - " << mov [2] << "\tenergy use - " << mov [3];
-        cout << "\n3: " << move3 << "\tdamage - " << mov [4] << "\tenergy use - " << mov [5] << endl;
+        cout << "\n1: " << move1 << "\tdamage - " << mov [0]*dmgmult << "\tenergy use - " << mov [1];
+        cout << "\n2: " << move2 << "\tdamage - " << mov [2]*dmgmult << "\tenergy use - " << mov [3];
+        cout << "\n3: " << move3 << "\tdamage - " << mov [4]*dmgmult << "\tenergy use - " << mov [5] << endl;
         cin >> t;
 
 
         switch (t) {
         case 1:
             if (energy>=mov [1]){
-            enhp=enhp-mov [0]+endef;
+            enhp=enhp-mov [0]*dmgmult+endef;
             energy=energy-mov [1];
             }
             break;
         case 2:
             if (energy>=mov [3]){
-            enhp=enhp-mov [2]+endef;
+            enhp=enhp-mov [2]*dmgmult+endef;
             energy=energy-mov [3];
             }
             break;
         case 3:
             if (energy>=mov [5]){
-            enhp=enhp-mov [4]+endef;
+            enhp=enhp-mov [4]*dmgmult+endef;
             energy=energy-mov [5];
             }
             break;
@@ -87,7 +87,8 @@ win=0;
 int main(){
 
     string name, cls, x, move1, move2, move3, move4;
-    int maxhp, maxenergy, hp, energy, gold, level=1, exp, y, meleemult, rangedmult, mov [6], def, endef, enmaxhp, enhp, t, endmg1, endmg2, endmg3, win;
+    int maxhp, maxenergy, hp, energy, credits, level=1, exp, y, mov [6], def, endef, enmaxhp, enhp, t, endmg1, endmg2, endmg3, win;
+    float dmgmult;
 
     do{
          cout << "What's your name?\n";
@@ -106,10 +107,9 @@ int main(){
                 maxenergy=100;
                 hp=maxhp;
                 energy=maxenergy;
-                gold=100;
+                credits=100;
                 y=0;
-                meleemult=1;
-                rangedmult=1;
+                dmgmult=1;
                 def=5;
 
                 move2="Kick      ";
@@ -126,17 +126,16 @@ int main(){
 
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
-                        "\nGold - " << gold;
+                        "\nCredits - " << credits;
 
             }else if (cls == "V2" ) {
                 maxhp=180;
                 maxenergy=50;
                 hp=maxhp;
                 energy=maxenergy;
-                gold=50;
+                credits=50;
                 y=0;
-                meleemult=1,5;
-                rangedmult=0,5;
+                dmgmult=1;
                 def=10;
 
                 move1="Punch      ";
@@ -154,17 +153,16 @@ int main(){
 
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
-                        "\nGold - " << gold;
+                        "\nCredits - " << credits;
 
             }else if (cls == "V1" ) {
                 maxhp=70;
                 maxenergy=150;
                 hp=maxhp;
                 energy=maxenergy;
-                gold=100;
+                credits=100;
                 y=0;
-                meleemult=0,5;
-                rangedmult=1.5;
+                dmgmult=1;
                 def=0;
 
                 move1="Slam    ";
@@ -182,17 +180,16 @@ int main(){
 
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
-                        "\nGold - " << gold;
+                        "\nCredits - " << credits;
 
             }else if (cls == "Sigms" ) {
                 maxhp=100000;
                 maxenergy=1000;
                 hp=maxhp;
                 energy=maxenergy;
-                gold=10000;
+                credits=10000;
                 y=0;
-                meleemult=3;
-                rangedmult=3;
+                dmgmult=1;
                 def=1000;
 
                 move1="Touch of death           ";
@@ -210,7 +207,7 @@ int main(){
 
                 cout << "\nHP - " << maxhp <<
                         "\nEnergy - " << maxenergy <<
-                        "\nGold - " << gold;
+                        "\nCredits - " << credits;
             }else {
                 y=1;
             }
@@ -229,13 +226,13 @@ int main(){
     endmg2=mov[2];
     endmg3=mov[4];
 
-    enemyattack (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg1, endmg2, endmg3, win, move1, move2, move3);
+    enemyattack (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg1, endmg2, endmg3, win, dmgmult, move1, move2, move3);
 
     hp=maxhp;
     energy=maxenergy;
     if (win>0){
-        gold=gold*1,5;
-        cout << "You wake up in a city and find a bag of gold next to you. ";
+        credits=credits*1,5;
+        cout << "You wake up in a city and find " << credits*0.5 << "Credits. ";
     }else {
         cout << "You wake up in a city. ";
     }
@@ -245,7 +242,7 @@ int main(){
     string place;
     int w, lasersword, lasergun, medpac, chargpac;
     do {
-        cout << "Where would you like to go? (You can open the inventory by typing 'inv' at any time except in combat)\n\n";
+        cout << "Where would you like to go?\n\n";
         cout <<"- Shop\n- Engineer\n- Medic\n- Leave\n\n";
 
 
@@ -254,31 +251,31 @@ int main(){
 
         if (place == "Shop" ) {
                 do {
-                cout<< "What would you like to buy?\n 1-Laser sword for 50 gold\n 2-Laser gun for 50 gold\n 3-Medpack for 25 gold\n 4-Charge pack for 25 gold\n 5-Leave the shop\n";
+                cout<< "What would you like to buy?\n 1-Laser sword for 50 credits\n 2-Laser gun for 50 credits\n 3-Medpack for 25 credits\n 4-Charge pack for 25 credits\n 5-Leave the shop\n";
                 cin >> w;
                 switch (w){
             case 1:
-                gold=gold-50;
+                credits=credits-50;
                 lasersword++;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 2:
-                gold=gold-50;
+                credits=credits-50;
                 lasergun++;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 3:
-                gold=gold-25;
+                credits=credits-25;
                 medpac++;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 4:
-                gold=gold-25;
+                credits=credits-25;
                 chargpac++;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 5:
@@ -295,36 +292,30 @@ int main(){
 
             }else if (place == "Engineer" ) {
                 do{
-                cout << "What stat do you want to upgrade?\n 1- Health for 50 gold (by 25)\n 2- Energy for 50 gold (by 25)\n 3- Ranged damage for 100 gold \n 4- Melee damage for 100 gold \n";
+                cout << "What stat do you want to upgrade?\n 1- Health for 50 credits (by 25)\n 2- Energy for 50 credits (by 25)\n 3- Damage for 100 credits \n 4- Leave the upgrade shop \n";
                 cin >> w;
 
                 switch (w){
 
             case 1:
-                gold=gold-50;
+                credits=credits-50;
                 maxhp+=25;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 2:
-                gold=gold-50;
+                credits=credits-50;
                 maxenergy+=25;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 3:
-                gold=gold-25;
-                rangedmult+=0.5;
-                cout << "\nRemaining gold - " << gold << endl;
+                credits=credits-100;
+                dmgmult+=0.5;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 4:
-                gold=gold-25;
-                meleemult+=0.5;
-                cout << "\nRemaining gold - " << gold << endl;
-                x="no";
-                break;
-            case 5:
                 cout << "Are you sure you want to leave?\n";
                 cin >> x;
                 break;
@@ -338,28 +329,28 @@ int main(){
 
             }else if (place == "Medic" ) {
                 do{
-                cout << "Do you want to heal or charge up?\n 1- Heal up\n 2- Charge up\n 3- Both\n 4- Leave\n";
+                cout << "Do you want to heal or charge up?\n 1- Heal up for 25 credits\n 2- Charge up for 25 credits\n 3- Both for 50 credits\n 4- Leave\n";
                 cin >> w;
 
                 switch (w){
 
             case 1:
-                gold=gold-50;
+                credits=credits-25;
                 hp=maxhp;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 2:
-                gold=gold-50;
+                credits=credits-25;
                 energy=maxenergy;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 3:
-                gold=gold-100;
+                credits=credits-50;
                 energy=maxenergy;
                 hp=maxhp;
-                cout << "\nRemaining gold - " << gold << endl;
+                cout << "\nRemaining credits - " << credits << endl;
                 x="no";
                 break;
             case 4:
