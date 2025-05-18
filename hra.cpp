@@ -3,15 +3,44 @@
 #include <string>
 using namespace std;
 
-void enemyattack (int maxhp, int maxenergy, int hp, int energy, int enmaxhp, int enhp, int t, int mov [6], int def, int endef, int endmg1, int endmg2, int endmg3, int win, float dmgmult, string move1, string move2, string move3) {
-    int x, y;
-    cout << "You encountered an enemy!\n\n";
-    do {
+void enemyattack (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], int enhp [4], int t, int mov [6], int def, int endef [4], int endmg [12], int &win, float dmgmult, int block, int enemy, string move1, string move2, string move3, string cls, string enemyn [4]) {
+    int x, y, ko;
+    ko=0;
+    float z;
+if (enemy==1) {
+    cout << "\n\n\n\n\n";
+    cout << " --------------------------- \n";
+    cout << "|                           |\n";
+    cout << "| You encountered an enemy! |\n";
+    cout << "|                           |\n";
+    cout << " --------------------------- \n";
+    cout << "\n\n";
+}else {
+    cout << "\n\n\n\n\n";
+    cout << " ---------------------------- \n";
+    cout << "|                            |\n";
+    cout << "| You encountered "<< enemy <<" enemies! |\n";
+    cout << "|                            |\n";
+    cout << " ---------------------------- \n";
+    cout << "\n\n";
+}
+do {
+
+
             do {
         y=0;
         if (enhp>0){
-        cout << "Enemy: \n";
-        cout << "Hp: " << enhp << "/" << enmaxhp << endl << endl << endl << endl;
+
+        for (int i=0; i<=enemy-1; i++) {
+        cout << enemyn[i] << ": \n";
+        cout << "Hp: " << enhp [i] << "/" << enmaxhp [i] << endl << endl;
+
+        }
+        cout << "\n\n\n";
+
+
+
+
 
         cout << "You:" << endl;
         cout << "HP: " << hp << "/" << maxhp << endl;
@@ -19,66 +48,129 @@ void enemyattack (int maxhp, int maxenergy, int hp, int energy, int enmaxhp, int
         cout << "Choose your attack: ";
         cout << "\n1: " << move1 << "\tdamage - " << mov [0]*dmgmult << "\tenergy use - " << mov [1];
         cout << "\n2: " << move2 << "\tdamage - " << mov [2]*dmgmult << "\tenergy use - " << mov [3];
-        cout << "\n3: " << move3 << "\tdamage - " << mov [4]*dmgmult << "\tenergy use - " << mov [5] << endl;
+        cout << "\n3: " << move3 << "\tdamage - " << mov [4]*dmgmult << "\tenergy use - " << mov [5];
+
+        if (cls=="V1"){
+            cout << "\n4: Parry\tBlock " << block << "% of incoming damage and heal " << maxhp/4 << " hp";
+        }else{
+            cout << "\n4: Block\tBlock " << block << "% of incoming damage";
+        }
+
+        cout << "\n5: Recharge\tRegain " << maxenergy/2 << " energy" << endl;
         cin >> t;
+        if (cin.fail()){
+            cin.clear();
+            cin.ignore();
+            t=542;
+        }
+
+
 
 
         switch (t) {
         case 1:
             if (energy>=mov [1]){
-            enhp=enhp-mov [0]*dmgmult+endef;
+            enhp[ko]=enhp[ko]-mov [0]*dmgmult+endef[ko];
             energy=energy-mov [1];
             }
+            z=1;
             break;
         case 2:
             if (energy>=mov [3]){
-            enhp=enhp-mov [2]*dmgmult+endef;
+            enhp[ko]=enhp[ko]-mov [2]*dmgmult+endef[ko];
             energy=energy-mov [3];
             }
+            z=1;
             break;
         case 3:
             if (energy>=mov [5]){
-            enhp=enhp-mov [4]*dmgmult+endef;
+            enhp[ko]=enhp[ko]-mov [4]*dmgmult+endef[ko];
             energy=energy-mov [5];
             }
+            z=1;
+            break;
+        case 4:
+            z=1-block/100;
+            if (cls=="V1"){
+                hp+=maxhp/4;
+            }
+
+            break;
+        case 5:
+            energy+=maxenergy/2;
+            z=1;
+
             break;
         default:
-            t=1;
-            cout << "Wrong input!"<<endl<<endl;
+            z=1;
+            y=1;
+            cout << "\n\n\n\n\nWrong input!"<<endl<<endl;
+
+
         }
+
+        if (enhp[ko]<=0){
+            enhp[ko]=0;
+            ko++;
+        }
+
         }
             }while(y==1);
 
 
-            if (enhp>0){
+
+
+
+
+
+            if (enhp[0]>0 || enhp[1]>0 || enhp[2]>0 || enhp[3]>0){
+
+
+        for (int i=0; i<=enemy-1; i++) {
             x=rand() %2;
             x++;
-            cout << "\n\n\n\n" << x << "\n\n\n\n";
+            cout<<endl << i<<endl;
         switch (x) {
         case 1:
-            hp=hp-endmg1+def;
+            hp=hp-endmg [0+3*i]*z+def;
             break;
         case 2:
-             hp=hp-endmg2+def;
+             hp=hp-endmg [1+3*i]*z+def;
             break;
         case 3:
-            hp=hp-endmg3+def;
+            hp=hp-endmg [2+3*i]*z+def;
             break;
-        default:;}}
+        default:;
 
 
-    }while (enhp>0);
-    cout << "\nEnemy: \n";
-    cout << "Hp: 0/" << enmaxhp << endl << endl << endl << endl;
+        }
 
-    cout << "You:" << endl;
+
+
+        }
+        if (hp>maxhp){hp=maxhp;}
+        if (energy>maxenergy){energy=maxenergy;}
+
+        }
+
+
+    }while (enhp [0]>0 || enhp [1]>0 || enhp [2] >0 || enhp [3]>0 && hp>0);
+
+
+
+        for (int i=0; i<=enemy-1; i++) {
+        cout << enemyn[i] << ": \n";
+        cout << "Hp: " << enhp [i] << "/" << enmaxhp [i] << endl << endl;
+
+        }
+    cout << endl << endl << "You:" << endl;
     cout << "HP: " << hp << "/" << maxhp << endl;
     cout << "Energy: " << energy << "/" << maxenergy << endl << endl << endl << endl;
 if (hp>0){
     cout << "\n\nYou won!\n\n";
     win=1;
 }else{
-cout << "You lost...";
+cout << "You lost...\n\n";
 win=0;
 }
 }
@@ -86,8 +178,8 @@ win=0;
 
 int main(){
 
-    string name, cls, x, move1, move2, move3, move4;
-    int maxhp, maxenergy, hp, energy, credits, level=1, exp, y, mov [6], def, endef, enmaxhp, enhp, t, endmg1, endmg2, endmg3, win;
+    string name, cls, x, move1, move2, move3, move4, enemyn [4];
+    int maxhp, maxenergy, hp, energy, credits, level=1, exp, y, mov [6], def, endef [4], enmaxhp [4], enhp [4], t, endmg[12], win, block, enemy;
     float dmgmult;
 
     do{
@@ -99,11 +191,11 @@ int main(){
     do{
 
             do{
-            cout << "Choose your class\n- Guy\n- V1\n- V2\n";
+            cout << "Choose your character\n- Guy\n- V1\n- V2\n";
             cin >> cls;
 
             if (cls == "Guy" ) {
-                maxhp=100;
+                maxhp=150;
                 maxenergy=100;
                 hp=maxhp;
                 energy=maxenergy;
@@ -111,7 +203,9 @@ int main(){
                 y=0;
                 dmgmult=1;
                 def=5;
+                block=75;
 
+                move1="Punch     ";
                 move2="Kick      ";
                 move3="Throw rock";
 
@@ -129,7 +223,7 @@ int main(){
                         "\nCredits - " << credits;
 
             }else if (cls == "V2" ) {
-                maxhp=180;
+                maxhp=200;
                 maxenergy=50;
                 hp=maxhp;
                 energy=maxenergy;
@@ -137,8 +231,9 @@ int main(){
                 y=0;
                 dmgmult=1;
                 def=10;
+                block=25;
 
-                move1="Punch      ";
+                move1="Shoot      ";
                 move2="Power blast";
                 move3="Ricoshot   ";
 
@@ -156,7 +251,7 @@ int main(){
                         "\nCredits - " << credits;
 
             }else if (cls == "V1" ) {
-                maxhp=70;
+                maxhp=100;
                 maxenergy=150;
                 hp=maxhp;
                 energy=maxenergy;
@@ -164,9 +259,10 @@ int main(){
                 y=0;
                 dmgmult=1;
                 def=0;
+                block=50;
 
                 move1="Slam    ";
-                move2="Parry   ";
+                move2="Shotgun ";
                 move3="Ricoshot";
 
                 mov [0]=20;
@@ -191,10 +287,11 @@ int main(){
                 y=0;
                 dmgmult=1;
                 def=1000;
+                block=100;
 
-                move1="Touch of death           ";
-                move2="Laser                    ";
-                move3="Speed of light rock throw";
+                move1="DIE!!!         ";
+                move2="Crush!!!       ";
+                move3="Prepare thyself";
 
                 mov [0]=15000;
                 mov [1]=15;
@@ -219,40 +316,64 @@ int main(){
 
 
 
-    enmaxhp=maxhp;
-    enhp=enmaxhp;
-    endef=0;
-    endmg1=mov[0];
-    endmg2=mov[2];
-    endmg3=mov[4];
+    enemyn [0]="You?";
 
-    enemyattack (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg1, endmg2, endmg3, win, dmgmult, move1, move2, move3);
+    enmaxhp [0]=maxhp;
+    enhp [0]=enmaxhp [0];
+
+    enmaxhp [1]=0;
+    enhp [1]=enmaxhp [1];
+
+    enmaxhp [2]=0;
+    enhp [2]=enmaxhp [2];
+
+    enmaxhp [3]=0;
+    enhp [3]=enmaxhp [3];
+
+
+    endef [0]=0;
+    endmg[0]=mov[0];
+    endmg[1]=mov[2];
+    endmg[2]=mov[4];
+    enemy=1;
+
+    enemyattack (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn);
 
     hp=maxhp;
     energy=maxenergy;
     if (win>0){
-        credits=credits*1,5;
-        cout << "You wake up in a city and find " << credits*0.5 << "Credits. ";
+        cout << "You wake up in a city and find " << credits/2 << " Credits. ";
+        credits=credits+credits/2;
     }else {
         cout << "You wake up in a city. ";
     }
 
-
-
-    string place;
-    int w, lasersword, lasergun, medpac, chargpac;
+    int w, lasersword, lasergun, medpac, chargpac, place;
     do {
         cout << "Where would you like to go?\n\n";
-        cout <<"- Shop\n- Engineer\n- Medic\n- Leave\n\n";
+        cout <<"1-Shop\n2-Engineer\n3-Medic\n4-Leave\n\n";
 
 
 
         cin >> place;
-
-        if (place == "Shop" ) {
+            if (cin.fail()){
+            cin.clear();
+            cin.ignore();
+            place=542;
+        }
+        switch (place){
+        case 1:
                 do {
+                cout << "Remaining Credits: " << credits << "\n\n";
                 cout<< "What would you like to buy?\n 1-Laser sword for 50 credits\n 2-Laser gun for 50 credits\n 3-Medpack for 25 credits\n 4-Charge pack for 25 credits\n 5-Leave the shop\n";
-                cin >> w;
+                cin >> w;cin >> t;
+
+                if (cin.fail()){
+                    cin.clear();
+                    cin.ignore();
+                    x="no";
+                }
+
                 switch (w){
             case 1:
                 credits=credits-50;
@@ -286,14 +407,22 @@ int main(){
                     x="no";}
                 }while(x=="no");
                     x="no";
+                    break;
 
 
 
 
-            }else if (place == "Engineer" ) {
+            case 2:
                 do{
+                cout << "Remaining Credits: " << credits << "\n\n";
                 cout << "What stat do you want to upgrade?\n 1- Health for 50 credits (by 25)\n 2- Energy for 50 credits (by 25)\n 3- Damage for 100 credits \n 4- Leave the upgrade shop \n";
                 cin >> w;
+
+                if (cin.fail()){
+                    cin.clear();
+                    cin.ignore();
+                    x="no";
+                }
 
                 switch (w){
 
@@ -323,14 +452,22 @@ int main(){
                 x="no";}
                 }while(x=="no");
                 x="no";
+                break;
 
 
 
 
-            }else if (place == "Medic" ) {
+            case 3:
                 do{
+                cout << "Remaining Credits: " << credits << "\n\n";
                 cout << "Do you want to heal or charge up?\n 1- Heal up for 25 credits\n 2- Charge up for 25 credits\n 3- Both for 50 credits\n 4- Leave\n";
                 cin >> w;
+
+                if (cin.fail()){
+                    cin.clear();
+                    cin.ignore();
+                    x="no";
+                }
 
                 switch (w){
 
@@ -361,18 +498,19 @@ int main(){
                     x="no";}
             }while (x=="no");
             x="no";
+            break;
 
 
 
-            }else if (place == "Leave" ) {
+            case 4:
                 cout << "Do you really want to leave?\n";
                 cin >> x;
-            }else if (place == "inv"){
-                x=="no";
+                break;
 
-            }else {
+            default:
+                cout << "\n\nWrong input!\n\n";
                 x="no";
-
+            break;
             }
     }while (x=="no");
 }
