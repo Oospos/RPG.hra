@@ -2,7 +2,28 @@
 #include <string>
 using namespace std;
 
-void monster (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], int enhp [4], int t, int mov [6], int def, int endef [4], int endmg [12], int &win, float dmgmult, int block, int enemy, string move1, string move2, string move3, string cls, string enemyn [4]) {
+void levelup (int &lvl, int &exp, int &lvlup, int &maxhp, int &maxenergy, int &def, float &dmgmult, string name, string move1, string move2, string move3, int mov[6]) {
+
+
+    exp=exp-lvlup;
+    lvl++;
+    lvlup=lvl*100;
+
+    maxhp+=10;
+    maxenergy+=10;
+    def++;
+    dmgmult+=0.25;
+
+    cout << "\n\n\nCongrats " << name << "you leveled up!\n\n";
+    cout << "Your max HP increased to " << maxhp << "!\n";
+    cout << "Your max energy increased to " << maxenergy << "!\n";
+    cout << "Your defense increased to " << def << "!\n\n";
+
+    cout << move1 << " now deals " << mov [0]*dmgmult << " damage!\n";
+    cout << move2 << " now deals " << mov [2]*dmgmult << " damage!\n";
+    cout << move3 << " now deals " << mov [4]*dmgmult << " damage!\n";
+}
+void monster (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], int enhp [4], int t, int mov [6], int def, int endef [4], int endmg [12], int &win, float dmgmult, int block, int enemy, string move1, string move2, string move3, string cls, string enemyn [4], string ent) {
     int x, y, ko, xyz=10;
     ko=0;
     float z;
@@ -21,7 +42,7 @@ if (enemy==1) {
     cout << "| You encountered "<< enemy <<" enemies! |\n";
     cout << "|                            |\n";
     cout << " ---------------------------- \n";
-    cout << "\n\n";
+    cout << "\n";
 }
 do {
 
@@ -31,11 +52,11 @@ do {
         if (enhp>0){
 
         for (int i=0; i<=enemy-1; i++) {
-        cout << "\n\n\n\n\n" << enemyn[i] << ": \n";
+        cout << "\n\n" << enemyn[i] << ": \n";
         cout << "Hp: " << enhp [i] << "/" << enmaxhp [i] << endl << endl;
 
         }
-        cout << "\n\n\n";
+        cout << "\n\n\n\n\n\n\n";
 
 
 
@@ -104,6 +125,7 @@ do {
             z=1;
             y=1;
             cout << "\n\n\n\n\nWrong input!"<<endl<<endl;
+            break;
 
 
         }
@@ -119,7 +141,7 @@ do {
 
             if (enhp[0]>0 || enhp[1]>0 || enhp[2]>0 || enhp[3]>0){
 
-
+        if (ent=="n") {
         for (int i=0; i<=enemy-1; i++) {
             x=rand() %2;
             x++;
@@ -137,6 +159,33 @@ do {
         default:;
         }
         }
+        }else if (ent=="m")
+        for (int i=0; i<=enemy-1; i++) {
+            x=rand() %4;
+            x++;
+            cout<<endl << i<<endl;
+        switch (x) {
+        case 1:
+            hp=hp-endmg [0+5*i]*z+def;
+            break;
+        case 2:
+             hp=hp-endmg [1+5*i]*z+def;
+            break;
+        case 3:
+            hp=hp-endmg [2+5*i]*z+def;
+            break;
+        case 4:
+            hp=hp-endmg [3+5*i]*z+def;
+            break;
+        case 5:
+            hp=hp-endmg [4+5*i]*z+def;
+            break;
+        default:;
+        }
+        }
+
+
+
         if (hp>maxhp){hp=maxhp;}
         if (energy>maxenergy){energy=maxenergy;}
 
@@ -162,12 +211,171 @@ cout << "You lost...\n\n";
 win=0;
 }
 }
+void bigboss (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], int enhp [4], int t, int mov [6], int def, int endef [4], int endmg [12], int &win, float dmgmult, int block, int enemy, string move1, string move2, string move3, string cls, string enemyn [4], string ent) {
+    int x, y, ko, xyz=10;
+    ko, x=0;
+    float z;
+    cout << "\n\n\n\n\n";
+    cout << " --------------------------- \n";
+    cout << "|                           |\n";
+    cout << "| You encountered The Boss! |\n";
+    cout << "|                           |\n";
+    cout << " --------------------------- \n";
+    cout << "\n\n";
 
+do {
+
+
+            do {
+        y=0;
+        if (enhp>0){
+
+        for (int i=0; i<=enemy-1; i++) {
+        cout << "\n\n" << enemyn[i] << ": \n";
+        cout << "Hp: " << enhp [i] << "/" << enmaxhp [i] << endl << endl;
+
+        }
+        cout << "\n\n\n\n\n\n\n";
+
+
+
+
+
+        cout << "You:" << endl;
+        cout << "HP: " << hp << "/" << maxhp << endl;
+        cout << "Energy: " << energy << "/" << maxenergy << endl << endl;
+        cout << "Choose your attack: ";
+        cout << "\n1: " << move1 << "\tdamage - " << mov [0]*dmgmult << "\tenergy use - " << mov [1];
+        cout << "\n2: " << move2 << "\tdamage - " << mov [2]*dmgmult << "\tenergy use - " << mov [3];
+        cout << "\n3: " << move3 << "\tdamage - " << mov [4]*dmgmult << "\tenergy use - " << mov [5];
+
+        if (cls=="Cyborg"){
+            cout << "\n4: Parry\tBlock " << block << "% of incoming damage and heal " << maxhp/4 << " hp";
+        }else{
+            cout << "\n4: Block\tBlock " << block << "% of incoming damage";
+        }
+
+        cout << "\n5: Recharge\tRegain " << maxenergy/2 << " energy" << endl;
+        cin >> t;
+        if (cin.fail()){
+            cin.clear();
+            cin.ignore();
+            t=542;
+        }
+
+
+
+
+        switch (t) {
+        case 1:
+            if (energy>=mov [1]){
+            enhp[ko]=enhp[ko]-mov [0]*dmgmult+endef[ko];
+            energy=energy-mov [1];
+            }
+            z=1;
+            break;
+        case 2:
+            if (energy>=mov [3]){
+            enhp[ko]=enhp[ko]-mov [2]*dmgmult+endef[ko];
+            energy=energy-mov [3];
+            }
+            z=1;
+            break;
+        case 3:
+            if (energy>=mov [5]){
+            enhp[ko]=enhp[ko]-mov [4]*dmgmult+endef[ko];
+            energy=energy-mov [5];
+            }
+            z=1;
+            break;
+        case 4:
+            z=1-block/100;
+            if (cls=="Cyborg"){
+                hp+=maxhp/4;
+            }
+
+            break;
+        case 5:
+            energy+=maxenergy/2;
+            z=1;
+
+            break;
+        default:
+            z=1;
+            y=1;
+            cout << "\n\n\n\n\nWrong input!"<<endl<<endl;
+            break;
+
+
+        }
+
+        if (enhp[ko]<=0){
+            enhp[ko]=0;
+            ko++;
+        }
+
+        }
+            }while(y==1);
+
+
+            if (enhp[0]>0 || enhp[1]>0 || enhp[2]>0 || enhp[3]>0){
+
+
+        for (int i=0; i<=enemy-1; i++) {
+            x++;
+            cout<<endl << i<<endl;
+        switch (x) {
+        case 1:
+            hp=hp-endmg [0+5*i]*z+def;
+            break;
+        case 2:
+             hp=hp-endmg [1+5*i]*z+def;
+            break;
+        case 3:
+            hp=hp-endmg [2+5*i]*z+def;
+            break;
+        case 4:
+            hp=hp-endmg [3+5*i]*z+def;
+            break;
+        case 5:
+            hp=hp-endmg [4+5*i]*z+def;
+            break;
+        default:;
+        }
+        }
+
+
+
+        if (hp>maxhp){hp=maxhp;}
+        if (energy>maxenergy){energy=maxenergy;}
+
+        }
+
+        if (enhp [0]<=0 && enhp [1]<=0 && enhp [2]<=0 && enhp [3]<=0){xyz=0;}
+        if (hp<=0){xyz=0;}
+
+
+    }while (xyz>0);
+
+
+
+
+    cout << endl << endl << "You:" << endl;
+    cout << "HP: " << hp << "/" << maxhp << endl;
+    cout << "Energy: " << energy << "/" << maxenergy << endl << endl << endl << endl;
+if (hp>0){
+    cout << "\n\nYou won!\n\n";
+    win=1;
+}else{
+cout << "You lost...\n\n";
+win=0;
+}
+}
 void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, int &energy, int &medpac, int &chargpac){
     do {
     cout << "Would you like like to heal or charge up?";
     cout << "\n1 - Heal with Medpac          - Medpacs left - " << medpac;
-    cout << "\n1 - Charge with Chargepac    - Chargepacs left - " << chargpac;
+    cout << "\n2 - Charge with Chargepac    - Chargepacs left - " << chargpac;
     cout << "\n3 - Nothing";
     cin >> y;
         if (cin.fail()){
@@ -175,10 +383,11 @@ void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, i
                 cin.ignore();
                 y=14532;
         }
-        if (medpac<1){y=4;}
-        if (chargpac<1){y=5;}
+
     switch (y) {
     case 1:
+
+        if (medpac>1) {
         if (maxhp-hp<25){
         cout << "You regained " << maxhp-hp << "of your HP";
 
@@ -187,27 +396,25 @@ void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, i
     }
         medpac--;
         hp+=25;
+        }else {cout << "\nNot enough Medpacs!\n";}
         break;
     case 2:
+        if (chargpac>1){
         if (maxenergy-energy<25){
-        cout << "You regained " << maxenergy-energy << " energy";;
-    case 3:
-        cout << "You do nothing";
-    }else{
-        cout << "You regained " << c << " energy";;
+        cout << "You regained " << maxenergy-energy << " energy";
+            }else{
+        cout << "You regained " << c << " energy";
     }
         chargpac--;
         energy+=25;
-        break;
-    case 4:
-        cout << "\nNot enough Medpacs!\n";
-        break;
-    case 5:
-        cout << "\nNot enough Chargepacs!\n";
+        }else {cout << "\nNot enough Medpacs!\n";}
+    case 3:
+        cout << "You do nothing";
         break;
     default:
         cout << "\n\nWrong input!\n\n";
         x="no";
+        break;
     }
 
     if(hp>maxhp){hp=maxhp;}
@@ -215,9 +422,9 @@ void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, i
 
 
     do{
-    cout << "Do you want to go further or stay a bit longer?";
-    cout << "1 - Go";
-    cout << "2 - Stay";
+    cout << "\n\nDo you want to go further or stay a bit longer?";
+    cout << "\n1 - Go";
+    cout << "\n2 - Stay";
     cin >> y;
         if (cin.fail()){
                 cin.clear();
@@ -241,8 +448,9 @@ void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, i
     }
 
 void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, int &medpac, int &chargpac, int &maxhp, int &hp, int &maxenergy, int &energy, float &dmgmult, string &x) {
+    int gfh;
     do{
-    cout << "Where would you like to go?\n\n";
+    cout << "\n\nWhere would you like to go?\n\n";
     cout <<"1-Shop\n2-Engineer\n3-Medic\n4-Leave\n\n";
      cin >> place;
             if (cin.fail()){
@@ -253,7 +461,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
         switch (place){
         case 1:
                 do {
-                cout << "Remaining Credits: " << credits << "\n\n";
+                cout << "Remaining Credits -  " << credits << "\n\n";
                 cout<< "What would you like to buy?\n 1-Laser sword for 50 credits\n 2-Laser gun for 50 credits\n 3-Medpack for 25 credits\n 4-Charge pack for 25 credits\n 5-Leave the shop\n";
                 cin >> w;
 
@@ -265,31 +473,39 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
 
                 switch (w){
             case 1:
+                if (credits>=50){
                 credits=credits-50;
                 lasersword++;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 2:
+                if (credits>=50){
                 credits=credits-50;
                 lasergun++;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 3:
+                if (credits>=25){
                 credits=credits-25;
                 medpac++;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 4:
+                if (credits>=25){
                 credits=credits-25;
                 chargpac++;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 5:
-                cout << "Are you sure you want to leave?\n";
+                cout << "Are you sure you want to leave? (yes/no)\n";
                 cin >> x;
                 break;
             default:
@@ -301,7 +517,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
 
 
 
-            case 2:
+        case 2:
                 do{
                 cout << "Remaining Credits: " << credits << "\n\n";
                 cout << "What stat do you want to upgrade?\n 1- Health for 50 credits (by 25)\n 2- Energy for 50 credits (by 25)\n 3- Damage for 100 credits \n 4- Leave the upgrade shop \n";
@@ -316,25 +532,31 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
                 switch (w){
 
             case 1:
+                if (credits>=50){
                 credits=credits-50;
                 maxhp+=25;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 2:
+                if (credits>=50){
                 credits=credits-50;
                 maxenergy+=25;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 3:
+                if (credits>=100){
                 credits=credits-100;
                 dmgmult+=0.5;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 4:
-                cout << "Are you sure you want to leave?\n";
+                cout << "Are you sure you want to leave? (yes/no)\n";
                 cin >> x;
                 break;
             default:
@@ -346,7 +568,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
 
 
 
-            case 3:
+        case 3:
                 do{
                 cout << "Remaining Credits: " << credits << "\n\n";
                 cout << "Do you want to heal or charge up?\n 1- Heal up for 25 credits\n 2- Charge up for 25 credits\n 3- Both for 50 credits\n 4- Leave\n";
@@ -356,29 +578,36 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
                     cin.clear();
                     cin.ignore();
                     x="no";
+                }
                     switch (w){
 
             case 1:
+                if (credits>=25){
                 credits=credits-25;
                 hp=maxhp;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 2:
+                if (credits>=25){
                 credits=credits-25;
                 energy=maxenergy;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 3:
+                if (credits>=50){
                 credits=credits-50;
                 energy=maxenergy;
                 hp=maxhp;
                 cout << "\nRemaining credits - " << credits << endl;
+                }else {cout << "Not enough credits!!!";}
                 x="no";
                 break;
             case 4:
-                cout << "Are you sure you want to leave?\n";
+                cout << "Are you sure you want to leave? (yes/no)\n";
                 cin >> x;
                 break;
             default:
@@ -387,15 +616,18 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
                 break;
 
             }
-                }
+
                 }while (x=="no");
 
-            case 4:
-                cout << "Are you sure you want to leave?\n";
+        case 4:
+                cout << "Are you sure you want to leave? (yes/no)\n";
                 cin >> x;
-            default:
+                break;
+
+        default:
                 cout << "\n\nWrong input!\n\n";
                 x="no";
+                break;
 
 
 
@@ -409,9 +641,12 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
 
 int main(){
 
-    string name, cls, x, move1, move2, move3, move4, enemyn [4];
-    int maxhp, maxenergy, hp, energy, credits, level=1, exp, h, y, c, v, mov [6], def, endef [4], enmaxhp [4], enhp [4], t, endmg[12], win, block, enemy;
+    string name, cls, x, move1, move2, move3, move4, enemyn [4], ent;
+    int lvl, exp, lvlup, maxhp, maxenergy, hp, energy, credits, h, y, c, v, mov [6], def, endef [4], enmaxhp [4], enhp [4], t, endmg[12], win, block, enemy;
     float dmgmult;
+    lvl=1;
+    exp=0;
+    lvlup=lvl*100;
 
     do{
          cout << "What's your name?\n";
@@ -457,7 +692,7 @@ int main(){
             }else if (cls == "3" ) {
                 cls="Andriod";
                 maxhp=200;
-                maxenergy=50;
+                maxenergy=60;
                 hp=maxhp;
                 energy=maxenergy;
                 credits=50;
@@ -470,13 +705,13 @@ int main(){
                 move2="Power blast";
                 move3="Ricoshot   ";
 
-                mov [0]=10;
+                mov [0]=15;
                 mov [1]=10;
 
-                mov [2]=15;
+                mov [2]=20;
                 mov [3]=15;
 
-                mov [4]=5;
+                mov [4]=10;
                 mov [5]=5;
 
                 cout << "\nHP - " << maxhp <<
@@ -552,6 +787,7 @@ int main(){
 
 
     enemyn [0]="You?";
+    ent="n";
 
     enmaxhp [0]=maxhp;
     enhp [0]=enmaxhp [0];
@@ -572,23 +808,29 @@ int main(){
     endmg[2]=mov[4];
     enemy=1;
 
-    monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn);
+    monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
 
     hp=maxhp;
     energy=maxenergy;
     if (win>0){
-        cout << "You wake up in a city and find " << credits/2 << " Credits. ";
+        cout << "You wake up in a city and realize it was just a nightmare and your not hurt at all.\n\n";
+        cout << "HP: " << hp << "/" << maxhp;
+        cout << "\nEnergy: " << energy << "/" << maxenergy;
+        cout << "\n\nYou find " << credits/2 << " Credits. You now have " << credits+credits/2 << " Credits";
         credits=credits+credits/2;
     }else {
-        cout << "You wake up in a city. ";
+        cout << "You wake up in a city and realize it as just a nightmare and your not hurt at all.";
+        cout << "HP: " << hp << "/" << maxhp;
+        cout << "Energy: " << energy << "/" << maxenergy;
     }
 
-    int w, lasersword, lasergun, medpac, chargpac, place;
+    int w=0, lasersword=0, lasergun=0, medpac=0, chargpac=0, place=0;
 
     village (place, w, credits, lasersword, lasergun, medpac, chargpac, maxhp, hp, maxenergy, energy, dmgmult, x);
 
 
     enemyn [0]="Drone";
+    ent="n";
 
     enmaxhp [0]=50;
     enhp [0]=enmaxhp [0];
@@ -609,14 +851,17 @@ int main(){
     endmg[2]=5;
     enemy=1;
 
-    monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn);
-
+    monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
+    exp+=rand() %25+25;
     if (win>0){
         v=rand() %5+10;
         credits=credits+v;
         cout << "\n\nYou gained " << v << " Credits!\n\n";
     }else {
         return 0;
+    }
+    if (exp>=lvlup){
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
     }
     h=25;
     c=25;
@@ -625,6 +870,7 @@ int main(){
 
 
     enemyn [0]="Droid";
+    ent="n";
 
     enmaxhp [0]=80;
     enhp [0]=enmaxhp [0];
@@ -645,8 +891,18 @@ int main(){
     endmg[2]=10;
     enemy=1;
 
-    monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn);
-
+    monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
+    exp+=rand() %25+25;
+        if (win>0){
+        v=rand() %5+10;
+        credits=credits+v;
+        cout << "\n\nYou gained " << v << " Credits!\n\n";
+    }else {
+        return 0;
+    }
+    if (exp>=lvlup){
+        levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    }
     h=25;
     c=25;
     healup (x, h, c, y, maxhp, hp, maxenergy, energy, medpac, chargpac);
