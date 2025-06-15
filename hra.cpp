@@ -18,12 +18,12 @@ void rest (int maxhp, int &hp, int maxenergy, int &energy) {
         }else if (v=="no"){
         cout << "Ok...\n";
         }else {
-        cout << "Wrong input!";
+        cout << "\n\nWrong input!\n\n";
         v="bo";
         }
     }while (v=="bo");
 }
-void levelup (int &lvl, int &exp, int &lvlup, int &maxhp, int &maxenergy, int &def, float &dmgmult, string name, string move1, string move2, string move3, int mov[6]) {
+void levelup (int &lvl, int &exp, int &lvlup, int &maxhp, int &maxenergy, int &def, float &dmgmult, string name, string move1, string move2, string move3, int mov[6], int &hp) {
 
 
     exp=exp-lvlup;
@@ -43,6 +43,11 @@ void levelup (int &lvl, int &exp, int &lvlup, int &maxhp, int &maxenergy, int &d
     cout << move1 << " now deals " << mov [0]*dmgmult << " damage!\n";
     cout << move2 << " now deals " << mov [2]*dmgmult << " damage!\n";
     cout << move3 << " now deals " << mov [4]*dmgmult << " damage!\n\n\n\n";
+
+    cout << "You healed 50% of your health!\n\n\n\n";
+    hp+=maxhp*0.5;
+    if (hp>maxhp){hp=maxhp;}
+    cout << "\nHP - " << hp << "/" << maxhp << endl;
 }
 void monster (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], int enhp [4], int t, int mov [6], int def, int endef [4], int endmg [12], int &win, float dmgmult, float block, int enemy, string move1, string move2, string move3, string cls, string enemyn [4], string ent) {
     int x, y, ko, xyz=10, iw, im, ik, id, iww, imm, ikk;
@@ -383,33 +388,34 @@ do {
         if (enhp[0]>0){
                 id++;
                 is++;
+                cout << endl << id << endl << is << endl;
                 if (is==5) {
-                    hp=(hp-40-id*10)*z+def;
+                    hp=hp-(20+id*10)*z+def;
                    is=0;
                 }
 
                 if (id==1){
-                    hp=(hp-40-id*10)*z+def;
+                    hp=hp-(20+id*10)*z+def;
 
                     }else if (id==2){
-                        hp=(hp-40-id*10)*z+def;
+                        hp=hp-(20+id*10)*z+def;
 
                     }else if (id==3){
-                        hp=(hp-40-id*10)*z+def;
+                        hp=hp-(20+id*10)*z+def;
 
                     }else if (id==4){
-                        hp=(hp-40-id*10)*z+def;
-
+                        hp=hp-(20+id*10)*z+def;
+                        id=0;
                 }
 
                 if (iw==3) {
-                    hp=hp-mov [0]*dmgmult+def;
+                    hp=hp-mov [0]*dmgmult*z+def;
                 }
                 if (im==3) {
-                    hp=hp-mov [2]*dmgmult+def;
+                    hp=hp-mov [2]*dmgmult*z+def;
                 }
                 if (ik==3) {
-                    hp=hp-mov [4]*dmgmult+def;
+                    hp=hp-mov [4]*dmgmult*z+def;
                 }
         }
 
@@ -707,9 +713,9 @@ int main(){
     lvl=1;
     exp=0;
     lvlup=lvl*100;
-
+    cout << "If there are number in the choices type in a number, if there's (yes/no) type in yes or no, and if there's neither type in anything.\n\n";
     do{
-         cout << "What's your name?\n";
+        cout << "What's your name?\n";
         cin >> name;
         cout << "Is your name " << name << "? (yes/no)" << endl;
         cin >> x;
@@ -864,8 +870,6 @@ int main(){
     }while (x=="no");
 
 
-
-
     enemyn [0]="You?";
     ent="n";
 
@@ -926,9 +930,10 @@ int main(){
 
 
     endef[0]=10;
+
     endmg[0]=30;
     endmg[1]=10;
-    endmg[2]=5;
+    endmg[2]=10;
     enemy=1;
 
     monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
@@ -943,7 +948,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=25;
     c=25;
@@ -985,7 +990,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-        levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+        levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=25;
     c=25;
@@ -1038,7 +1043,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=25;
     c=25;
@@ -1081,7 +1086,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=35;
     c=35;
@@ -1114,16 +1119,16 @@ int main(){
     endef[2]=5;
 
     endmg[0]=25;
-    endmg[1]=5;
+    endmg[1]=10;
     endmg[2]=15;
 
     endmg[3]=25;
-    endmg[4]=5;
-    endmg[5]=10;
+    endmg[4]=10;
+    endmg[5]=15;
 
     endmg[6]=20;
     endmg[7]=15;
-    endmg[8]=5;
+    endmg[8]=10;
     enemy=3;
 
     monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
@@ -1148,7 +1153,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=35;
     c=35;
@@ -1174,8 +1179,8 @@ int main(){
 
     endef[0]=10;
     endmg[0]=35;
-    endmg[1]=10;
-    endmg[2]=15;
+    endmg[1]=15;
+    endmg[2]=20;
     enemy=1;
 
     monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
@@ -1190,7 +1195,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=35;
     c=35;
@@ -1219,7 +1224,7 @@ int main(){
 
     endmg[0]=30;
     endmg[1]=25;
-    endmg[2]=15;
+    endmg[2]=20;
 
     endmg[3]=30;
     endmg[4]=25;
@@ -1243,7 +1248,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=35;
     c=35;
@@ -1267,9 +1272,9 @@ int main(){
 
 
     endef[0]=25;
-    endmg[0]=15;
+    endmg[0]=25;
     endmg[1]=20;
-    endmg[2]=10;
+    endmg[2]=20;
     enemy=1;
 
     monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
@@ -1289,7 +1294,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=45;
     c=45;
@@ -1314,12 +1319,12 @@ int main(){
     enhp [3]=enmaxhp [3];
 
 
-    endef[0]=20;
-    endmg[0]=20;
-    endmg[1]=20;
-    endmg[2]=20;
-    endmg[3]=50;
-    endmg[4]=60;
+    endef[0]=25;
+    endmg[0]=25;
+    endmg[1]=25;
+    endmg[2]=25;
+    endmg[3]=65;
+    endmg[4]=65;
     enemy=1;
 
     monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
@@ -1332,7 +1337,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=45;
     c=45;
@@ -1362,7 +1367,7 @@ int main(){
     endef[0]=20;
     endef[1]=15;
 
-    endmg[0]=25;
+    endmg[0]=30;
     endmg[1]=40;
     endmg[2]=25;
 
@@ -1388,7 +1393,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=45;
     c=45;
@@ -1454,7 +1459,7 @@ int main(){
         return 0;
     }
     if (exp>=lvlup){
-    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov);
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
     }
     h=45;
     c=45;
@@ -1464,7 +1469,7 @@ int main(){
     village (place, w, credits, lasersword, lasergun, medpac, chargpac, maxhp, hp, maxenergy, energy, dmgmult, x, h, c, cost1, cost2, cost3);
 
 
-    enmaxhp [0]=700;
+    enmaxhp [0]=600;
     enhp [0]=enmaxhp [0];
 
     enmaxhp [1]=0;
@@ -1476,17 +1481,76 @@ int main(){
     enmaxhp [3]=0;
     enhp [3]=enmaxhp [3];
 
-    endef[0]=25;
+    endef[0]=0;
     enemy=1;
 
-
     bigboss (maxhp, maxenergy,hp, energy, enmaxhp , enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
+    int jakito;
     if (win>0){
-            cout << "Congratulations you won!";
+            cout << "Congratulations you won!\n\n\n";
+            do {
+            cout << "How would you rate this game on a scale from 1-10?\n";
+            cin >> jakito;
+            if (cin.fail()){
+            cin.clear();
+            cin.ignore();
+            jakito=-12356;
+            }
+            }while (jakito==-12356);
+
     }else {
         return 0;
     }
 
 
 
+
+
+
+    if (jakito>10){
+    exp+=500;
+    if (exp>=lvlup){
+    levelup (lvl, exp, lvlup, maxhp, maxenergy, def, dmgmult, name, move1, move2, move3, mov, hp);
+    }
+    credits+=500;
+    village (place, w, credits, lasersword, lasergun, medpac, chargpac, maxhp, hp, maxenergy, energy, dmgmult, x, h, c, cost1, cost2, cost3);
+
+    enemyn [0]="Jakito";
+    ent="m";
+
+    enmaxhp [0]=10000;
+    enhp [0]=enmaxhp [0];
+
+    enmaxhp [1]=0;
+    enhp [1]=enmaxhp [1];
+
+    enmaxhp [2]=0;
+    enhp [2]=enmaxhp [2];
+
+    enmaxhp [3]=0;
+    enhp [3]=enmaxhp [3];
+
+
+    endef[0]=15;
+
+    endef[1]=15;
+
+    endmg[0]=100;
+    endmg[1]=80;
+    endmg[2]=50;
+    endmg[3]=40;
+    endmg[4]=75;
+    enemy=1;
+
+    monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
+    if (win>0){
+            cout << "Congratulations you beat the secret boss!!\n\nI don't know know though...\n";
+    }
+
+
+
+
+    }else if (jakito<1) {
+        cout << "\n\n\nNevermind, you lose\nCan't even follow basic instructions smh...\n\n";
+    }else {cout << "\n\n\nThanks for your feedback!\n\n\n";}
 }
