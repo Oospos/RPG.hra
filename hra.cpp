@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 using namespace std;
 
 void rest (int maxhp, int &hp, int maxenergy, int &energy) {
@@ -19,12 +20,12 @@ void rest (int maxhp, int &hp, int maxenergy, int &energy) {
         cout << "Ok...\n";
         }else {
         cout << "\n\nWrong input!\n\n";
+        Sleep(3000);
         v="bo";
         }
     }while (v=="bo");
 }
 void levelup (int &lvl, int &exp, int &lvlup, int &maxhp, int &maxenergy, int &def, float &dmgmult, string name, string move1, string move2, string move3, int mov[6], int &hp) {
-
 
     exp=exp-lvlup;
     lvl++;
@@ -53,6 +54,7 @@ void monster (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], i
     int x, y, ko, xyz=10, iw, im, ik, id, iww, imm, ikk;
     ko=0, x=0, id=0, iw=0, im=0, ik=0;
     float z;
+    system("cls");
     if (ent=="n"){
 if (enemy==1) {
     cout << "\n\n\n\n\n";
@@ -80,12 +82,13 @@ if (enemy==1) {
     cout << " ----------------------------- \n";
     cout << "\n\n";
     }
+    Sleep(2000);
 do {
 
 
             do {
         y=0;
-
+        system("cls");
         if (enemy==1){cout << "\nenemy:";}
         if (enemy>1){cout << "\nenemies:";}
         for (int i=0; i<=enemy-1; i++) {
@@ -173,6 +176,7 @@ do {
             z=1;
             y=1;
             cout << "\n\n\n\n\nWrong input!"<<endl<<endl;
+            Sleep (3000);
             break;
 
 
@@ -277,6 +281,7 @@ void bigboss (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], i
     int x, y, ko, xyz=10, iw, im, is, ik, id, iww, imm, ikk;
     ko=0, x=0, id=0, iw=0, im=0, is=0, ik=0;
     float z;
+    system("cls");
     cout << "\n\n\n\n\n";
     cout << " ---------------------- \n";
     cout << "|                      |\n";
@@ -284,12 +289,14 @@ void bigboss (int maxhp, int maxenergy, int &hp, int &energy, int enmaxhp [4], i
     cout << "|                      |\n";
     cout << " ---------------------- \n";
     cout << "\n\n";
+    Sleep(2000);
 
 do {
 
 
             do {
         y=0;
+        system("cls");
         if (enhp>0){
 
         for (int i=0; i<=enemy-1; i++) {
@@ -374,6 +381,7 @@ do {
             z=1;
             y=1;
             cout << "\n\n\n\n\nWrong input!"<<endl<<endl;
+            Sleep (3000);
             break;
 
         }
@@ -493,6 +501,7 @@ void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, i
         break;
     default:
         cout << "\n\nWrong input!\n\n";
+        Sleep(3000);
         x="no";
         break;
     }
@@ -520,6 +529,7 @@ void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, i
         break;
     default:
         cout << "\n\nWrong input!\n\n";
+        Sleep(3000);
         x="not";
         }
         }while (x=="not");
@@ -528,7 +538,9 @@ void healup (string x, int h, int c, int y, int maxhp, int &hp, int maxenergy, i
     }
 void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, int &medpac, int &chargpac, int &maxhp, int &hp, int &maxenergy, int &energy, float &dmgmult, string &x, int h, int c, float &cost1, float &cost2, float &cost3) {
     int gfh;
+    Sleep(5000);
     do{
+    system("cls");
     cout << "\n\nWhere would you like to go?\n\n";
     cout <<"1-Shop\n2-Upgrade shop\n3-Medic\n4-Leave\n\n";
      cin >> place;
@@ -540,6 +552,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
         switch (place){
         case 1:
                 do {
+                system("cls");
                 cout << "Remaining credits:  " << credits << "\n\n";
                 cout<< "What would you like to buy?\n 1-Medpack for 25 credits allows healing in between fights\n 2-Charge pack for 25 credits allows charging in between fights\n 3-Leave the shop\n";
                 cin >> w;
@@ -572,6 +585,8 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
                 cin >> x;
                 break;
             default:
+                cout << "\n\n Wrong input!\n\n";
+                Sleep (3000);
                     x="no";}
                 }while(x=="no");
                     x="no";
@@ -582,6 +597,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
 
         case 2:
                 do{
+                system("cls");
                 cout << "Remaining Credits: " << credits << "\n\n";
                 cout << "What stat do you want to upgrade?\n 1- Health for " << 50*cost1 << " credits (by 25)\n 2- Energy for " << 50*cost2 << " credits (by 25)\n 3- Damage for " << 100*cost3 << " credits \n 4- Leave the upgrade shop \n";
                 cin >> w;
@@ -626,6 +642,8 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
                 cin >> x;
                 break;
             default:
+                cout << "\n\n Wrong input!\n\n";
+                Sleep (3000);
                 x="no";}
                 }while(x=="no");
                 x="no";
@@ -636,6 +654,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
 
         case 3:
                 do{
+                system("cls");
                 cout << "Remaining Credits: " << credits << "\n\n";
                 cout << "Do you want to heal or charge up?\n 1- Heal up for 25 credits\n 2- Charge up for 25 credits\n 3- Both for 50 credits\n 4- Leave\n";
                 cin >> w;
@@ -678,6 +697,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
                 break;
             default:
                 cout << "\n\n Wrong input!\n\n";
+                Sleep (3000);
                 x="no";
                 break;
 
@@ -692,6 +712,7 @@ void village (int &place, int &w, int &credits, int &lasersword, int &lasergun, 
 
         default:
                 cout << "\n\n Wrong input!\n\n";
+                Sleep (3000);
                 x="no";
                 break;
 
@@ -723,6 +744,7 @@ int main(){
     do{
 
             do{
+            system("cls");
             cout << "Choose your character\n1 - Guy\n2 - Cyborg\n3 - Android\n";
             cin >> cls;
 
@@ -758,7 +780,8 @@ int main(){
                         "\n\nAttacks: \n" <<
                         move1 << " - deals " << mov [0]*dmgmult << " damage\n" <<
                         move2 << " - deals " << mov [2]*dmgmult << " damage\n" <<
-                        move3 << " - deals " << mov [4]*dmgmult << " damage\n\n\n\n";
+                        move3 << " - deals " << mov [4]*dmgmult << " damage"
+                        << "\n\nHas low energy costs and high block\n\n\n\n";
 
             }else if (cls == "3" ) {
                 cls="Android";
@@ -792,7 +815,8 @@ int main(){
                         "\n\nAttacks: \n" <<
                         move1 << " - deals " << mov [0]*dmgmult << " damage\n" <<
                         move2 << " - deals " << mov [2]*dmgmult << " damage\n" <<
-                        move3 << " - deals " << mov [4]*dmgmult << " damage\n\n\n\n";
+                        move3 << " - deals " << mov [4]*dmgmult << " damage"
+                        << "\n\nHas high HP and defense, but low block\n\n\n\n";
 
             }else if (cls == "2" ) {
                 cls="Cyborg";
@@ -826,7 +850,8 @@ int main(){
                         "\n\nAttacks: \n" <<
                         move1 << " - deals " << mov [0]*dmgmult << " damage\n" <<
                         move2 << " - deals " << mov [2]*dmgmult << " damage\n" <<
-                        move3 << " - deals " << mov [4]*dmgmult << " damage\n\n\n\n";
+                        move3 << " - deals " << mov [4]*dmgmult << " damage"
+                        << "\n\nHas low health, no defense but has a parry instead of a block, that lets you heal\n\n\n\n";
 
             }else if (cls == "Sigms" ) {
                 maxhp=100000;
@@ -859,9 +884,11 @@ int main(){
                         "\n\nAttacks: \n" <<
                         move1 << " - deals " << mov [0]*dmgmult << " damage\n" <<
                         move2 << " - deals " << mov [2]*dmgmult << " damage\n" <<
-                        move3 << " - deals " << mov [4]*dmgmult << " damage\n\n\n\n";
+                        move3 << " - deals " << mov [4]*dmgmult << " damage"
+                        << "\n\nIs basically god\n\n\n\n";
             }else {
                 cout << "\n\nWrong input!\n\n";
+                Sleep(3000);
                 y=1;
             }
          }while (y==1);
@@ -1489,6 +1516,7 @@ int main(){
     if (win>0){
             cout << "Congratulations you won!\n\n\n";
             do {
+            system("cls");
             cout << "How would you rate this game on a scale from 1-10?\n";
             cin >> jakito;
             if (cin.fail()){
@@ -1535,16 +1563,16 @@ int main(){
 
     endef[1]=15;
 
-    endmg[0]=100;
-    endmg[1]=80;
-    endmg[2]=50;
-    endmg[3]=40;
-    endmg[4]=75;
+    endmg[0]=230;
+    endmg[1]=175;
+    endmg[2]=125;
+    endmg[3]=100;
+    endmg[4]=150;
     enemy=1;
 
     monster (maxhp, maxenergy, hp, energy, enmaxhp, enhp, t, mov, def, endef, endmg, win, dmgmult, block, enemy, move1, move2, move3, cls, enemyn, ent);
     if (win>0){
-            cout << "Congratulations you beat the secret boss!!\n\nI don't know know though...\n";
+            cout << "Congratulations you beat the secret boss!!\n\nI don't know how though...\n";
     }
 
 
